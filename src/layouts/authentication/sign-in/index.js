@@ -32,12 +32,10 @@ function Basic() {
     console.log(rememberMe);
 
     try {
-      const res = await Api.get("/Employee/Login", {
-        data: {
-          email: email,
-          password: password,
-          isAdmin: rememberMe,
-        },
+      const res = await Api.post("Employee/Login", {
+        email: email,
+        password: password,
+        isAdmin: rememberMe,
       });
 
       console.log("res==>>", res);

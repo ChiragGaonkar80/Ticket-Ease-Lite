@@ -5,17 +5,45 @@ import MDBox from "components/MDBox";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import ReportsBarChart from "examples/Charts/BarCharts/ReportsBarChart";
+import DefaultDoughnutChart from "examples/Charts/DoughnutCharts/DefaultDoughnutChart";
 import ReportsLineChart from "examples/Charts/LineCharts/ReportsLineChart";
 import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
 
 // Data
 import reportsLineChartData from "layouts/admin/Analytics/data/reportsLineChartData";
 import reportsBarChartData from "layouts/admin/Analytics/data/reportsBarChartData";
+import { useEffect, useState } from "react";
+import Api from "utils/Api";
 
 // Dashboard components
 
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
+  const [data, setData] = useState([]);
+  const [ticketStatusData, setTicketStatusData] = useState([]);
+  var labels = [];
+  var count = [];
+  useEffect(() => {
+    async function fetchData() {
+      console.log("this is working");
+      var id = 1;
+      const res = await Api.get(`Employee/GetTicketStatusCountsForAdmin?emp_id=${id}`);
+      console.log("token==>>", res.data);
+      setData(res.data);
+
+      res.data.map((d, i) => {
+        labels[i] = d.status_title;
+        count[i] = d.ticket_count;
+      });
+    }
+    fetchData();
+    setTicketStatusData({
+      labels: labels,
+      datasets: { label: "Status", data: count },
+    });
+  }, []);
+
+  var currentDate = new Date();
 
   return (
     <DashboardLayout>
@@ -28,26 +56,26 @@ function Dashboard() {
                 color="dark"
                 icon="blindsRoundedIcon"
                 title="Opened"
-                count={209}
-                // percentage={{
-                //   color: "success",
-                //   amount: "+55%",
-                //   label: "than lask week",
-                // }}
+                count={"102"}
+                percentage={{
+                  // color: "success",
+                  // amount: "+55%",
+                  label: "102 Tickets are opened.",
+                }}
               />
             </MDBox>
           </Grid>
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
-                icon="runCircleRoundedIcon"
+                icon="person"
                 title="In Progress"
                 count="105"
-                // percentage={{
-                //   color: "success",
-                //   amount: "+3%",
-                //   label: "than last month",
-                // }}
+                percentage={{
+                  // color: "success",
+                  // amount: "+3%",
+                  label: "105 Tickets are in progress.",
+                }}
               />
             </MDBox>
           </Grid>
@@ -58,11 +86,11 @@ function Dashboard() {
                 icon="store"
                 title="Resolved"
                 count="700"
-                // percentage={{
-                //   color: "success",
-                //   amount: "+1%",
-                //   label: "than yesterday",
-                // }}
+                percentage={{
+                  // color: "success",
+                  // amount: "+1%",
+                  label: "700 Tickets were resolved.",
+                }}
               />
             </MDBox>
           </Grid>
@@ -73,11 +101,11 @@ function Dashboard() {
                 icon="closed"
                 title="Closed"
                 count="1.8k"
-                // percentage={{
-                //   color: "success",
-                //   amount: "",
-                //   label: "Just updated",
-                // }}
+                percentage={{
+                  color: "success",
+                  amount: "",
+                  label: "1.8k Tickets were closed.",
+                }}
               />
             </MDBox>
           </Grid>
@@ -87,36 +115,35 @@ function Dashboard() {
             <Grid item xs={12} md={6} lg={4}>
               <MDBox mb={3}>
                 <ReportsBarChart
-                  color="info"
-                  title="website views"
-                  description="Last Campaign Performance"
-                  date="campaign sent 2 days ago"
-                  chart={reportsBarChartData}
-                />
-              </MDBox>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={3}>
-                <ReportsBarChart
-                  color="info"
-                  title="website views"
-                  description="Last Campaign Performance"
-                  date="campaign sent 2 days ago"
-                  chart={reportsBarChartData}
+                  color="success"
+                  title="Ticket Status"
+                  description="Bar Chart analyzing the work completed based on Ticket Status"
+                  date={
+                    "Updated on " +
+                    currentDate.getDate() +
+                    " " +
+                    currentDate.toLocaleString("default", { month: "long" }) +
+                    " " +
+                    currentDate.getFullYear()
+                  }
+                  chart={ticketStatusData}
                 />
               </MDBox>
             </Grid>
             <Grid item xs={12} md={6} lg={4}>
               <MDBox mb={3}>
                 <ReportsLineChart
-                  color="success"
-                  title="daily sales"
-                  description={
-                    <>
-                      (<strong>+15%</strong>) increase in today sales.
-                    </>
+                  color="info"
+                  title="Monthly Handled"
+                  description="Line Chart displaying monthly resolved Tickets"
+                  date={
+                    "Updated on " +
+                    currentDate.getDate() +
+                    " " +
+                    currentDate.toLocaleString("default", { month: "long" }) +
+                    " " +
+                    currentDate.getFullYear()
                   }
-                  date="updated 4 min ago"
                   chart={sales}
                 />
               </MDBox>
@@ -125,10 +152,17 @@ function Dashboard() {
               <MDBox mb={3}>
                 <ReportsLineChart
                   color="dark"
-                  title="completed tasks"
-                  description="Last Campaign Performance"
-                  date="just updated"
-                  chart={tasks}
+                  title="Monthly Handled"
+                  description="Line Chart displaying monthly resolved Tickets"
+                  date={
+                    "Updated on " +
+                    currentDate.getDate() +
+                    " " +
+                    currentDate.toLocaleString("default", { month: "long" }) +
+                    " " +
+                    currentDate.getFullYear()
+                  }
+                  chart={sales}
                 />
               </MDBox>
             </Grid>

@@ -7,6 +7,7 @@ import Icon from "@mui/material/Icon";
 import Incidents from "layouts/admin/Incidents";
 import Requests from "layouts/admin/Requests";
 import Analytics from "layouts/admin/Analytics/Analytics";
+import Signout from "layouts/Signout";
 
 const routes = [
   {
@@ -42,6 +43,14 @@ const routes = [
     icon: <Icon fontSize="small">person</Icon>,
     route: "/admin/profile",
     component: <Profile />,
+  },
+  {
+    type: "collapse",
+    name: "Sign-out",
+    key: "signout",
+    icon: <Icon fontSize="small">person</Icon>,
+    route: "/signout",
+    component: <Signout />,
   },
 
   //   {

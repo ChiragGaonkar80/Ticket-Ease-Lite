@@ -29,6 +29,7 @@ import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "co
 import brandWhite from "assets/images/TE.png";
 import Api from "utils/Api";
 import Basic from "layouts/authentication/sign-in";
+import TicketOverview from "layouts/admin/ticketOverview";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -93,7 +94,7 @@ export default function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Routes>
-        <Route path="/authentication/sign-in" element={<Basic />} />
+        <Route path="/" element={<Basic />} />
       </Routes>
       {console.log("signed==>>", signed, admin)}
       {signed && admin == "false" && (
@@ -106,6 +107,7 @@ export default function App() {
       {signed && admin == "true" && (
         <Routes>
           {getRoutes(adminRoutes)}
+          <Route path="/ticketoverview/:id" element={<TicketOverview />} />
           <Route path="*" element={<Navigate to="/admin/dashboard" />} />
         </Routes>
       )}

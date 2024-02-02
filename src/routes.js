@@ -50,6 +50,7 @@ import Icon from "@mui/material/Icon";
 import Incidents from "layouts/incidents";
 import Requests from "layouts/requests";
 import Manager from "layouts/manager";
+import InstallationForm from "layouts/forms/InstallationForm";
 
 const routes = [
   {
@@ -132,11 +133,11 @@ const routes = [
 
   {
     type: "collapse",
-    name: "Manager",
+    name: "Installation Form",
     key: "manager",
-    icon: <Icon fontSize="small">Manager</Icon>,
-    route: "/manager",
-    component: <Manager />,
+    icon: <Icon fontSize="small">Installation Form</Icon>,
+    route: "/installation-form",
+    component: <InstallationForm />,
   },
 
   // {

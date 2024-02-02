@@ -39,20 +39,13 @@ function Basic() {
       });
 
       console.log("res==>>", res);
+      window.sessionStorage.setItem("authtoken", res.data.token);
+      window.sessionStorage.setItem("isadmin", rememberMe);
+      window.location.href = rememberMe ? "/admin/dashboard" : "/dashboard";
     } catch (err) {
       console.log("err==>>", err);
     }
   };
-
-  // useEffect(() => {
-  //   axios
-  //     .get(
-  //       "https://localhost:7093/api/Employee/GetEmployeeByCredentials?email=siya%40gmail.com&password=siya123&isAdmin=false"
-  //     )
-  //     .then((res) => {
-  //       console.log("res==>>", res.data);
-  //     });
-  // }, []);
 
   return (
     <BasicLayout image={bgImage}>

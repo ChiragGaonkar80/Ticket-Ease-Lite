@@ -36,8 +36,8 @@ export default function App() {
   const [onMouseEnter, setOnMouseEnter] = useState(false);
   const { pathname } = useLocation();
 
-  const [admin, setAdmin] = useState(true);
-  const [signed, isSigned] = useState(true);
+  const [admin, setAdmin] = useState(sessionStorage.getItem("isadmin"));
+  const [signed, isSigned] = useState(sessionStorage.getItem("authtoken") != null ? true : false);
 
   const handleOnMouseEnter = () => {
     if (miniSidenav && !onMouseEnter) {
@@ -57,23 +57,19 @@ export default function App() {
     document.body.setAttribute("dir", direction);
   }, [direction]);
 
-  // useEffect(async () => {
-  // const token = await window.sessionStorage("authtoken");
-  // console.log("token==>>", token);
-  // if (token !== null) setAdmin(true);
-  // }, []);
-
   useEffect(() => {
     async function fetchData() {
-      const token = await window.sessionStorage.getItem("authtoken");
-      console.log("token==>>", token);
-      if (token !== null) setAdmin(true);
+      if (signed) {
+        // isSigned(true);
+        setAdmin(admin);
+        console.log("why is this not working ");
+        // window.location.href = "/dashboard";
+      }
+      //  else {
+      //   window.location.href = "/authetication/sign-in";
+      // }
     }
     fetchData();
-
-    Api.get("BU/GetAll").then((res) => {
-      console.log("res==>>", res);
-    });
   }, []);
 
   useEffect(() => {
@@ -99,7 +95,21 @@ export default function App() {
       <Routes>
         <Route path="/authentication/sign-in" element={<Basic />} />
       </Routes>
-      {signed && admin == false && (
+      {console.log("signed==>>", signed, admin)}
+      {signed && admin == "false" && (
+        <Routes>
+          {getRoutes(routes)}
+          <Route path="*" element={<Navigate to="/dashboard" />} />
+        </Routes>
+      )}
+
+      {signed && admin == "true" && (
+        <Routes>
+          {getRoutes(adminRoutes)}
+          <Route path="*" element={<Navigate to="/admin/dashboard" />} />
+        </Routes>
+      )}
+      {signed && admin == "false" && (
         <Sidenav
           color={sidenavColor}
           brand={brandWhite}
@@ -109,7 +119,7 @@ export default function App() {
           onMouseLeave={handleOnMouseLeave}
         />
       )}
-      {signed && admin == true && (
+      {signed && admin == "true" && (
         <Sidenav
           color={sidenavColor}
           brand={brandWhite}
@@ -118,19 +128,6 @@ export default function App() {
           onMouseEnter={handleOnMouseEnter}
           onMouseLeave={handleOnMouseLeave}
         />
-      )}
-      {signed && admin == false && (
-        <Routes>
-          {getRoutes(routes)}
-          <Route path="*" element={<Navigate to="/dashboard" />} />
-        </Routes>
-      )}
-
-      {signed && admin == true && (
-        <Routes>
-          {getRoutes(adminRoutes)}
-          <Route path="*" element={<Navigate to="/admin/dashboard" />} />
-        </Routes>
       )}
     </ThemeProvider>
   );

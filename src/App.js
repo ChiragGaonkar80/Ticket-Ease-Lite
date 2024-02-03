@@ -30,6 +30,7 @@ import brandWhite from "assets/images/TE.png";
 import Api from "utils/Api";
 import Basic from "layouts/authentication/sign-in";
 import TicketOverview from "layouts/admin/ticketOverview";
+import DynamicForm from "layouts/forms/DynamicForm";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -100,6 +101,7 @@ export default function App() {
       {signed && admin == "false" && (
         <Routes>
           {getRoutes(routes)}
+          <Route path="/dynamicform" element={<DynamicForm />} />
           <Route path="*" element={<Navigate to="/dashboard" />} />
         </Routes>
       )}
@@ -108,6 +110,7 @@ export default function App() {
         <Routes>
           {getRoutes(adminRoutes)}
           <Route path="/ticketoverview/:id" element={<TicketOverview />} />
+
           <Route path="*" element={<Navigate to="/admin/dashboard" />} />
         </Routes>
       )}

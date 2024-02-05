@@ -25,8 +25,10 @@ function Basic() {
   const [email, setEmail] = useState("");
 
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
 
   const checkLogin = async () => {
+    setError(null);
     console.log(email);
     console.log(password);
     console.log(rememberMe);
@@ -38,11 +40,15 @@ function Basic() {
         isAdmin: rememberMe,
       });
 
-      console.log("res==>>", res);
-      window.sessionStorage.setItem("authtoken", res.data.token);
-      window.sessionStorage.setItem("isadmin", rememberMe);
-      window.location.href = rememberMe ? "/admin/dashboard" : "/dashboard";
+      console.log("res==>>", res.status);
+      if (res.status == 200) {
+        window.sessionStorage.setItem("authtoken", res.data.token);
+        window.sessionStorage.setItem("isadmin", rememberMe);
+        window.location.href = rememberMe ? "/admin/dashboard" : "/dashboard";
+      } else {
+      }
     } catch (err) {
+      setError("Incorrect email or password.");
       console.log("err==>>", err);
     }
   };
@@ -111,10 +117,23 @@ function Basic() {
               <MDInput
                 type="password"
                 label="Password"
+                error={error !== null}
                 fullWidth
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => {
+                  setError(null);
+                  setPassword(e.target.value);
+                }}
               />
             </MDBox>
+            {error && (
+              <MDTypography
+                variant="h2"
+                fontWeight="medium"
+                style={{ fontSize: "15px", color: "red", textAlign: "right" }}
+              >
+                {error}
+              </MDTypography>
+            )}
 
             <MDBox display="flex" alignItems="center" ml={-1}>
               <Switch checked={rememberMe} onChange={handleSetRememberMe} />

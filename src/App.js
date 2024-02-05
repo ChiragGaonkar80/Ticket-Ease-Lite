@@ -31,6 +31,7 @@ import Api from "utils/Api";
 import Basic from "layouts/authentication/sign-in";
 import TicketOverview from "layouts/admin/ticketOverview";
 import DynamicForm from "layouts/forms/DynamicForm";
+import InstallationForm from "layouts/forms/InstallationForm";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -101,6 +102,7 @@ export default function App() {
       {signed && admin == "false" && (
         <Routes>
           {getRoutes(routes)}
+          <Route path="/form/:request_id" element={<InstallationForm />} />
           <Route path="/dynamicform" element={<DynamicForm />} />
           <Route path="*" element={<Navigate to="/dashboard" />} />
         </Routes>

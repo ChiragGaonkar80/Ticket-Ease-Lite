@@ -166,6 +166,24 @@ function Dashboard() {
                 />
               </MDBox>
             </Grid>
+            <Grid item xs={12} md={6} lg={4}>
+              <MDBox mb={3}>
+                <DefaultDoughnutChart
+                  color="dark"
+                  title="Monthly Handled"
+                  description="Line Chart displaying monthly resolved Tickets"
+                  date={
+                    "Updated on " +
+                    currentDate.getDate() +
+                    " " +
+                    currentDate.toLocaleString("default", { month: "long" }) +
+                    " " +
+                    currentDate.getFullYear()
+                  }
+                  chart={ticketStatusData}
+                />
+              </MDBox>
+            </Grid>
           </Grid>
         </MDBox>
         {/* <MDBox>

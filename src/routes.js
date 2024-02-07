@@ -15,6 +15,9 @@ import Requests from "layouts/requests";
 import Manager from "layouts/manager";
 import InstallationForm from "layouts/forms/InstallationForm";
 import Signout from "layouts/Signout";
+import DynamicForm from "layouts/forms/DynamicForm";
+import CreateForm from "layouts/admin/CreateForm/CreateForm";
+import RemoveForm from "layouts/admin/RemoveForm/RemoveForm";
 
 const routes = [
   {
@@ -101,13 +104,31 @@ const routes = [
     key: "manager",
     icon: <Icon fontSize="small">person</Icon>,
     route: "/installation-form",
-    component: <InstallationForm />,
+    component: <DynamicForm />,
   },
 
   {
     type: "collapse",
+    name: "Create Form",
+    key: "createform",
+    icon: <Icon fontSize="small">person</Icon>,
+    route: "/create-form",
+    component: <CreateForm />,
+  },
+
+  // {
+  //   type: "collapse",
+  //   name: "Remove Existing Form",
+  //   key: "removeform",
+  //   icon: <Icon fontSize="small">person</Icon>,
+  //   route: "/remove-form",
+  //   component: <RemoveForm />,
+  // },
+
+  {
+    type: "collapse",
     name: "Sign Out",
-    key: "manager",
+    key: "signout",
     icon: <Icon fontSize="small">person</Icon>,
     route: "/signout",
     component: <Signout />,

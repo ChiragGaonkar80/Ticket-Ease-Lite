@@ -18,14 +18,15 @@ import MDAvatar from "components/MDAvatar";
 
 // Material Dashboard 2 React base styles
 import breakpoints from "assets/theme/base/breakpoints";
-
+import Api from "utils/Api";
 // Images
-import burceMars from "assets/images/bruce-mars.jpg";
+import Marie from "assets/images/marie.jpg";
 import backgroundImage from "assets/images/bg-profile.jpeg";
 
 function Header({ children }) {
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
+  const [empData, setEmpData] = useState([]);
 
   useEffect(() => {
     // A function that sets the orientation state of the tabs.
@@ -34,6 +35,15 @@ function Header({ children }) {
         ? setTabsOrientation("vertical")
         : setTabsOrientation("horizontal");
     }
+    async function fetchData() {
+      try {
+        const response = await Api.get(`Employee/GetEmployeeById?emp_id=1`);
+        setEmpData(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+    fetchData();
 
     /** 
      The event listener that's calling the handleTabsOrientation function when resizing the window.
@@ -79,16 +89,16 @@ function Header({ children }) {
       >
         <Grid container spacing={3} alignItems="center">
           <Grid item>
-            <MDAvatar src={burceMars} alt="profile-image" size="xl" shadow="sm" />
+            <MDAvatar src={Marie} alt="profile-image" size="xl" shadow="sm" />
           </Grid>
           <Grid item>
             <MDBox height="100%" mt={0.5} lineHeight={1}>
               <MDTypography variant="h5" fontWeight="medium">
-                Ganesh Chodankar
+                {empData.firstname + " " + empData.lastname}
               </MDTypography>
-              <MDTypography variant="button" color="text" fontWeight="regular">
+              {/* <MDTypography variant="button" color="text" fontWeight="regular">
                 Software Developer
-              </MDTypography>
+              </MDTypography> */}
             </MDBox>
           </Grid>
         </Grid>

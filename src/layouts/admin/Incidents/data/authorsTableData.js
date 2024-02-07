@@ -91,7 +91,13 @@ export default function data() {
         ),
         dateAndTime: <CreatedDate date={"12/09/2023"} time={"09:00 AM"} />,
         action: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+          <MDTypography
+            component="a"
+            href="/viewInDetail/3"
+            variant="caption"
+            color="text"
+            fontWeight="medium"
+          >
             Edit
           </MDTypography>
         ),

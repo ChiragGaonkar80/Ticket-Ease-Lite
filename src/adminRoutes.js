@@ -8,7 +8,6 @@ import Incidents from "layouts/admin/Incidents";
 import Requests from "layouts/admin/Requests";
 import Analytics from "layouts/admin/Analytics/Analytics";
 import Signout from "layouts/Signout";
-import CreateNewForms from "layouts/admin/CreateForms";
 
 const routes = [
   {
@@ -44,14 +43,6 @@ const routes = [
     icon: <Icon fontSize="small">person</Icon>,
     route: "/admin/profile",
     component: <Profile />,
-  },
-  {
-    type: "collapse",
-    name: "Create New",
-    key: "createnew",
-    icon: <Icon fontSize="small">person</Icon>,
-    route: "/admin/createNewForm",
-    component: <CreateNewForms />,
   },
   {
     type: "collapse",

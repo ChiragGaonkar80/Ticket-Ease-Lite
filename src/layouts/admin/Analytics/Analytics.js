@@ -19,28 +19,55 @@ import Api from "utils/Api";
 
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
-  const [data, setData] = useState([]);
   const [ticketStatusData, setTicketStatusData] = useState([]);
-  var labels = [];
-  var count = [];
+  const [ticketPriorityData, setTicketPriorityData] = useState([]);
+  var labelsForStatusCount = [];
+  var countForStatusCount = [];
+  var labelsForPriorityCount = [];
+  var countForPriorityCount = [];
   useEffect(() => {
     async function fetchData() {
-      console.log("this is working");
       var id = 1;
-      const res = await Api.get(`Employee/GetTicketStatusCountsForAdmin?emp_id=${id}`);
-      console.log("token==>>", res.data);
-      setData(res.data);
+      const ticketStatusCount = await Api.get(
+        `Employee/GetTicketStatusCountsForAdmin?emp_id=${id}`
+      );
 
-      res.data.map((d, i) => {
-        labels[i] = d.status_title;
-        count[i] = d.ticket_count;
+      ticketStatusCount.data.map((d, i) => {
+        labelsForStatusCount[i] = d.status_title;
+        countForStatusCount[i] = d.ticket_count;
+      });
+
+      const ticketPriorityCount = await Api.get(
+        `Employee/GetTicketPriorityCountsForAdmin?emp_id=${id}`
+      );
+
+      ticketPriorityCount.data.map((d, i) => {
+        if (d.priority == 1) {
+          labelsForPriorityCount[i] = "High";
+        } else if (d.priority == 2) {
+          labelsForPriorityCount[i] = "Mid";
+        } else {
+          labelsForPriorityCount[i] = "Low";
+        }
+        countForPriorityCount[i] = d.ticket_count;
+      });
+
+      console.log("labelsForPriorityCount" + labelsForPriorityCount);
+      console.log("countForPriorityCount" + countForPriorityCount);
+      console.log("labelsForStatusCount" + labelsForStatusCount);
+      console.log("countForStatusCount" + countForStatusCount);
+
+      setTicketStatusData({
+        labels: labelsForStatusCount,
+        datasets: { label: "Status", data: countForStatusCount },
+      });
+
+      setTicketPriorityData({
+        labels: labelsForPriorityCount,
+        datasets: { label: "Priority", data: countForPriorityCount },
       });
     }
     fetchData();
-    setTicketStatusData({
-      labels: labels,
-      datasets: { label: "Status", data: count },
-    });
   }, []);
 
   var currentDate = new Date();
@@ -117,7 +144,7 @@ function Dashboard() {
                 <ReportsBarChart
                   color="success"
                   title="Ticket Status"
-                  description="Bar Chart analyzing the work completed based on Ticket Status"
+                  description="Bar Chart analyzing the Ticket Status"
                   date={
                     "Updated on " +
                     currentDate.getDate() +
@@ -132,10 +159,10 @@ function Dashboard() {
             </Grid>
             <Grid item xs={12} md={6} lg={4}>
               <MDBox mb={3}>
-                <ReportsLineChart
+                <ReportsBarChart
                   color="info"
-                  title="Monthly Handled"
-                  description="Line Chart displaying monthly resolved Tickets"
+                  title="Ticket Priority"
+                  description="Bar Chart analyzing the Ticket Priorities"
                   date={
                     "Updated on " +
                     currentDate.getDate() +
@@ -144,7 +171,7 @@ function Dashboard() {
                     " " +
                     currentDate.getFullYear()
                   }
-                  chart={sales}
+                  chart={ticketPriorityData}
                 />
               </MDBox>
             </Grid>

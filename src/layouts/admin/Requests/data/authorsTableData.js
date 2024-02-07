@@ -93,7 +93,7 @@ export default function data() {
         action: (
           <MDTypography
             component="a"
-            href="/ticketoverview/3"
+            href="/viewInDetail/3"
             variant="caption"
             color="text"
             fontWeight="medium"

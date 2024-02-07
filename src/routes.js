@@ -116,14 +116,14 @@ const routes = [
     component: <CreateForm />,
   },
 
-  {
-    type: "collapse",
-    name: "Remove Existing Form",
-    key: "removeform",
-    icon: <Icon fontSize="small">person</Icon>,
-    route: "/remove-form",
-    component: <RemoveForm />,
-  },
+  // {
+  //   type: "collapse",
+  //   name: "Remove Existing Form",
+  //   key: "removeform",
+  //   icon: <Icon fontSize="small">person</Icon>,
+  //   route: "/remove-form",
+  //   component: <RemoveForm />,
+  // },
 
   {
     type: "collapse",

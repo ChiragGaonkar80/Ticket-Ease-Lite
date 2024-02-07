@@ -20,18 +20,6 @@ const InstallationForm = () => {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      {/* <FormControl>
-        <InputLabel htmlFor="hostname">Hostname</InputLabel>
-        <Input id="hostname" aria-describedby="hostname" />
-      </FormControl>
-      <FormControl>
-        <InputLabel htmlFor="requested">Requested Software</InputLabel>
-        <Input id="requested" aria-describedby="requested" />
-      </FormControl>
-      <FormControl>
-        <InputLabel htmlFor="platform">Installation Platform</InputLabel>
-        <Input id="platform" aria-describedby="platform" />
-      </FormControl> */}
 
       <React.Fragment>
         <Typography variant="h6" gutterBottom>

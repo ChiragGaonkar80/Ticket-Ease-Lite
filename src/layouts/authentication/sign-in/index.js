@@ -42,8 +42,12 @@ function Basic() {
 
       console.log("res==>>", res.status);
       if (res.status == 200) {
+        console.log("res==>>", res.data);
+        alert("wait a minute");
         window.sessionStorage.setItem("authtoken", res.data.token);
         window.sessionStorage.setItem("isadmin", rememberMe);
+        window.sessionStorage.setItem("emp_id", res.data.payload.emp_id);
+        window.sessionStorage.setItem("dept_id", res.data.payload.dept_id);
         window.location.href = rememberMe ? "/admin/dashboard" : "/dashboard";
       } else {
       }

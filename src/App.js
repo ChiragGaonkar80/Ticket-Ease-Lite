@@ -102,7 +102,7 @@ export default function App() {
       {signed && admin == "false" && (
         <Routes>
           {getRoutes(routes)}
-          <Route path="/form/:request_id" element={<InstallationForm />} />
+          <Route path="/form/:request_id" element={<DynamicForm />} />
           <Route path="/dynamicform" element={<DynamicForm />} />
           <Route path="*" element={<Navigate to="/dashboard" />} />
         </Routes>

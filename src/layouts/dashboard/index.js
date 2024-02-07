@@ -19,19 +19,57 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Projects from "layouts/dashboard/components/Projects";
 import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
+import Api from "utils/Api";
 
 // Dashboard components
 
 function Dashboard() {
-  const [activeDept, setActiveDept] = useState(1);
+  const [adminRequests, setAdminRequests] = useState([]);
+
+  const [hrRequests, setHrRequests] = useState([]);
+
+  const [lndRequests, setLndRequests] = useState([]);
+
+  const [itRequests, setItRequests] = useState([]);
+
+  const [current, setCurrent] = useState("admin");
+
+  var data1;
+  var data2;
+  var data3;
+  var data4;
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        data1 = await Api.get("RequestType/GetRequestTypesByDeptId?dept_id=1");
+        data2 = await Api.get("RequestType/GetRequestTypesByDeptId?dept_id=2");
+        data3 = await Api.get("RequestType/GetRequestTypesByDeptId?dept_id=3");
+        data4 = await Api.get("RequestType/GetRequestTypesByDeptId?dept_id=4");
+
+        setItRequests(data1.data);
+        setLndRequests(data4.data);
+        setHrRequests(data3.data);
+        setAdminRequests(data2.data);
+
+        console.log("data==>>", data1);
+        console.log("data==>>", data2);
+        console.log("data==>>", data3);
+        console.log("data==>>", data4);
+      } catch (e) {
+        console.log("err==>>", err);
+      }
+    }
+    fetchData();
+  }, []);
 
   const tasks = [
     {
-      id: 1,
+      id: "admin",
       dept: "Admin and Security Staff",
       icon: "weekend",
       color: "dark",
@@ -66,7 +104,7 @@ function Dashboard() {
     },
 
     {
-      id: 2,
+      id: "hr",
       dept: "Human Resources and Payroll",
       icon: "leaderboard",
       color: "success",
@@ -111,7 +149,7 @@ function Dashboard() {
     },
 
     {
-      id: 3,
+      id: "it",
       dept: "Information Technology",
       icon: "store",
       color: "primary",
@@ -145,7 +183,7 @@ function Dashboard() {
       ],
     },
     {
-      id: 4,
+      id: "lnd",
       dept: "Learning and Development",
       icon: "person_add",
       color: "warning",
@@ -180,24 +218,15 @@ function Dashboard() {
     },
   ];
 
-  const bull = (
-    <Box component="span" sx={{ display: "inline-block", mx: "2px", transform: "scale(0.8)" }}>
-      •
-    </Box>
-  );
-
   return (
     <DashboardLayout>
       <DashboardNavbar />
 
-      {/* <embed src={`data:application/pdf;base64,${base64STR}`} /> */}
-
       <MDBox py={3}>
         <Grid container spacing={3}>
           {tasks.map((item, key) => {
-            console.log("item==>>", item);
             return (
-              <Grid item xs={12} md={6} lg={3} key={item.id} onClick={() => setActiveDept(item.id)}>
+              <Grid item xs={12} md={6} lg={3} key={item.id} onClick={() => setCurrent(item.id)}>
                 <MDBox mb={1.5}>
                   <ComplexStatisticsCard
                     color={item.color}
@@ -214,138 +243,117 @@ function Dashboard() {
               </Grid>
             );
           })}
-
-          {/* <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                color="dark"
-                icon="weekend"
-                title="Bookings"
-                count={281}
-                percentage={{
-                  color: "success",
-                  amount: "+55%",
-                  label: "than lask week",
-                }}
-              />
-            </MDBox>
-          </Grid>
-          <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                icon="leaderboard"
-                title="Today's Users"
-                count="2,300"
-                percentage={{
-                  color: "success",
-                  amount: "+3%",
-                  label: "than last month",
-                }}
-              />
-            </MDBox>
-          </Grid>
-          <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                color="success"
-                icon="store"
-                title="Revenue"
-                count="34k"
-                percentage={{
-                  color: "success",
-                  amount: "+1%",
-                  label: "than yesterday",
-                }}
-              />
-            </MDBox>
-          </Grid>
-          <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                color="primary"
-                icon="person_add"
-                title="Followers"
-                count="+91"
-                percentage={{
-                  color: "success",
-                  amount: "",
-                  label: "Just updated",
-                }}
-              />
-            </MDBox>
-          </Grid> */}
         </Grid>
 
         <MDBox mt={4.5}>
           <Grid container spacing={3}>
-            {tasks[activeDept - 1].features.map((item) => {
-              return (
-                <Grid item xs={12} md={6} lg={4} key={item.id}>
-                  <MDBox mb={3}>
-                    <Card sx={{ minWidth: 275 }}>
-                      <CardContent>
-                        {/* <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                          Word of the Day
-                        </Typography> */}
-                        <Typography variant="h5" component="div">
-                          {item.feature}
-                        </Typography>
-                        {/* <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                          adjective
-                        </Typography> */}
-                        <Typography variant="body2">{item.description}</Typography>
-                      </CardContent>
-                      <CardActions>
-                        <Button
-                          size="small"
-                          onClick={() => (window.location.href = `form/${item.id}`)}
-                        >
-                          Raise Request
-                        </Button>
-                      </CardActions>
-                    </Card>
-                  </MDBox>
-                </Grid>
-              );
-            })}
+            {current == "admin" &&
+              adminRequests.map((item) => {
+                return (
+                  <Grid item xs={12} md={6} lg={4} key={item.id}>
+                    <MDBox mb={3}>
+                      <Card sx={{ minWidth: 275 }}>
+                        <CardContent>
+                          <Typography variant="h5" component="div">
+                            {item.request_type}
+                          </Typography>
 
-            {/* <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={3}>
-                <ReportsBarChart
-                  color="info"
-                  title="website views"
-                  description="Last Campaign Performance"
-                  date="campaign sent 2 days ago"
-                  chart={reportsBarChartData}
-                />
-              </MDBox>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={3}>
-                <ReportsLineChart
-                  color="success"
-                  title="daily sales"
-                  description={
-                    <>
-                      (<strong>+15%</strong>) increase in today sales.
-                    </>
-                  }
-                  date="updated 4 min ago"
-                  chart={sales}
-                />
-              </MDBox>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={3}>
-                <ReportsLineChart
-                  color="dark"
-                  title="completed tasks"
-                  description="Last Campaign Performance"
-                  date="just updated"
-                  chart={tasks}
-                />
-              </MDBox>
-            </Grid> */}
+                          <Typography variant="body2">{item.description}</Typography>
+                        </CardContent>
+                        <CardActions>
+                          <Button
+                            size="small"
+                            onClick={() => (window.location.href = `form/${item.request_type_id}`)}
+                          >
+                            Raise Request
+                          </Button>
+                        </CardActions>
+                      </Card>
+                    </MDBox>
+                  </Grid>
+                );
+              })}
+
+            {current == "hr" &&
+              hrRequests.map((item) => {
+                return (
+                  <Grid item xs={12} md={6} lg={4} key={item.id}>
+                    <MDBox mb={3}>
+                      <Card sx={{ minWidth: 275 }}>
+                        <CardContent>
+                          <Typography variant="h5" component="div">
+                            {item.request_type}
+                          </Typography>
+
+                          <Typography variant="body2">{item.description}</Typography>
+                        </CardContent>
+                        <CardActions>
+                          <Button
+                            size="small"
+                            onClick={() => (window.location.href = `form/${item.request_type_id}`)}
+                          >
+                            Raise Request
+                          </Button>
+                        </CardActions>
+                      </Card>
+                    </MDBox>
+                  </Grid>
+                );
+              })}
+
+            {current == "it" &&
+              itRequests.map((item) => {
+                return (
+                  <Grid item xs={12} md={6} lg={4} key={item.id}>
+                    <MDBox mb={3}>
+                      <Card sx={{ minWidth: 275 }}>
+                        <CardContent>
+                          <Typography variant="h5" component="div">
+                            {item.request_type}
+                          </Typography>
+
+                          <Typography variant="body2">{item.description}</Typography>
+                        </CardContent>
+                        <CardActions>
+                          <Button
+                            size="small"
+                            onClick={() => (window.location.href = `form/${item.request_type_id}`)}
+                          >
+                            Raise Request
+                          </Button>
+                        </CardActions>
+                      </Card>
+                    </MDBox>
+                  </Grid>
+                );
+              })}
+
+            {current == "lnd" &&
+              lndRequests.map((item) => {
+                return (
+                  <Grid item xs={12} md={6} lg={4} key={item.id}>
+                    <MDBox mb={3}>
+                      <Card sx={{ minWidth: 275 }}>
+                        <CardContent>
+                          <Typography variant="h5" component="div">
+                            {item.request_type}
+                          </Typography>
+
+                          <Typography variant="body2">{item.description}</Typography>
+                        </CardContent>
+                        <CardActions>
+                          <Button
+                            size="small"
+                            onClick={() => (window.location.href = `form/${item.request_type_id}`)}
+                          >
+                            Raise Request
+                          </Button>
+                        </CardActions>
+                      </Card>
+                    </MDBox>
+                  </Grid>
+                );
+              })}
           </Grid>
         </MDBox>
       </MDBox>

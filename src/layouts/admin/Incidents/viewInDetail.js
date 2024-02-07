@@ -1,16 +1,16 @@
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import React from "react";
-import { useParams } from "react-router-dom";
+import ChatButton from "../chatButton";
 
-const TicketOverview = () => {
-  const { id } = useParams();
+const ViewInDetail = () => {
+  const personEmail = "naveen_naik1@persistent.com";
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <h1>Ticket Details {id}</h1>
+      <ChatButton email={personEmail} />
     </DashboardLayout>
   );
 };
 
-export default TicketOverview;
+export default ViewInDetail;

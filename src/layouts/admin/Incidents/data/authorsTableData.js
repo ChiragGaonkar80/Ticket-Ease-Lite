@@ -91,7 +91,13 @@ export default function data() {
         ),
         dateAndTime: <CreatedDate date={"12/09/2023"} time={"09:00 AM"} />,
         action: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+          <MDTypography
+            component="a"
+            href="/viewInDetail/3"
+            variant="caption"
+            color="text"
+            fontWeight="medium"
+          >
             Edit
           </MDTypography>
         ),
@@ -149,7 +155,7 @@ export default function data() {
       {
         ticketId: <MDTypography>SR7892</MDTypography>,
         name: (
-          <Author image={team3} name="Sharvani Parbhugaonkar" email="sharvani@persistent.com" />
+          <Author image={team3} name="Sharvani Prabhu Salgaonkar" email="sharvani@persistent.com" />
         ),
         managerName: <Manager image={team3} name="Muskan Ladiya" email="muskan@persistent.com" />,
         status: (

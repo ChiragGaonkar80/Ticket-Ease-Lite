@@ -29,7 +29,7 @@ import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "co
 import brandWhite from "assets/images/TE.png";
 import Api from "utils/Api";
 import Basic from "layouts/authentication/sign-in";
-import TicketOverview from "layouts/admin/ticketOverview";
+import ViewInDetail from "layouts/admin/Incidents/viewInDetail";
 import DynamicForm from "layouts/forms/DynamicForm";
 import InstallationForm from "layouts/forms/InstallationForm";
 
@@ -111,8 +111,7 @@ export default function App() {
       {signed && admin == "true" && (
         <Routes>
           {getRoutes(adminRoutes)}
-          <Route path="/ticketoverview/:id" element={<TicketOverview />} />
-
+          <Route path="/viewInDetail/:id" element={<ViewInDetail />} />
           <Route path="*" element={<Navigate to="/admin/dashboard" />} />
         </Routes>
       )}

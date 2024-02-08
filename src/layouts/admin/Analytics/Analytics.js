@@ -15,6 +15,7 @@ import reportsBarChartData from "layouts/admin/Analytics/data/reportsBarChartDat
 import { useEffect, useState } from "react";
 import Api from "utils/Api";
 import { Button } from "@mui/material";
+import { Bar, Doughnut } from "react-chartjs-2";
 
 // Dashboard components
 
@@ -29,7 +30,17 @@ function Dashboard() {
 
   const [totalStatusCount, setTotalStatusCount] = useState({});
 
-  // const [totalCounts, setTotalCounts] = useState({});
+  const data = {
+    labels: ["Red", "Blue", "Yellow"],
+    datasets: [
+      {
+        label: "My First Dataset",
+        data: [300, 50, 100],
+        backgroundColor: ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 205, 86)"],
+        hoverOffset: 4,
+      },
+    ],
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -67,7 +78,10 @@ function Dashboard() {
 
       setTicketStatusData({
         labels: labelsForStatusCount,
-        datasets: { label: "Status", data: countForStatusCount },
+        datasets: {
+          label: "Status",
+          data: countForStatusCount,
+        },
       });
 
       setTicketPriorityData({
@@ -185,6 +199,11 @@ function Dashboard() {
             </Grid>
             <Grid item xs={12} md={6} lg={4}>
               <MDBox mb={3}>
+                <Doughnut type="doughnut" data={data} />
+              </MDBox>
+            </Grid>
+            <Grid item xs={12} md={6} lg={4}>
+              <MDBox mb={3}>
                 <ReportsLineChart
                   color="dark"
                   title="Monthly Handled"
@@ -198,24 +217,6 @@ function Dashboard() {
                     currentDate.getFullYear()
                   }
                   chart={sales}
-                />
-              </MDBox>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={3}>
-                <DefaultDoughnutChart
-                  color="dark"
-                  title="Monthly Handled"
-                  description="Line Chart displaying monthly resolved Tickets"
-                  date={
-                    "Updated on " +
-                    currentDate.getDate() +
-                    " " +
-                    currentDate.toLocaleString("default", { month: "long" }) +
-                    " " +
-                    currentDate.getFullYear()
-                  }
-                  chart={ticketStatusData}
                 />
               </MDBox>
             </Grid>

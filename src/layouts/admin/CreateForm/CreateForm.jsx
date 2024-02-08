@@ -75,10 +75,12 @@ const CreateForm = () => {
     console.log(fields);
     console.log(struct);
 
+    const dept_id = await sessionStorage.getItem("dept_id");
+
     var res = await Api.post("RequestType/CreateRequest", {
-      request_type_id: 6,
+      request_type_id: "",
       request_type: formTitle,
-      dept_id: 2,
+      dept_id: dept_id,
       description: formDesc,
       is_incident: true,
       structure: struct,

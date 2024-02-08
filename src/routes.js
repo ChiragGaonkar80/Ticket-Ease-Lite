@@ -98,23 +98,7 @@ const routes = [
   //   component: <SignIn />,
   // },
 
-  {
-    type: "collapse",
-    name: "Installation Form",
-    key: "manager",
-    icon: <Icon fontSize="small">person</Icon>,
-    route: "/installation-form",
-    component: <DynamicForm />,
-  },
 
-  {
-    type: "collapse",
-    name: "Create Form",
-    key: "createform",
-    icon: <Icon fontSize="small">person</Icon>,
-    route: "/create-form",
-    component: <CreateForm />,
-  },
 
   // {
   //   type: "collapse",

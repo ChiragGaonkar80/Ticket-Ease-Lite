@@ -42,8 +42,9 @@ function Incidents() {
 
   React.useEffect(() => {
     async function fetchData() {
-      console.log("this is working");
-      const res = await Api.get("Ticket/GetAll");
+      const emp_id = await sessionStorage.getItem("emp_id");
+      console.log("emp_id==>>", emp_id);
+      const res = await Api.get(`Ticket/GetAllIncidentTicketsByEmpId?emp_id=${emp_id}`);
       console.log("token==>>", res.data);
       setData(res.data);
     }
@@ -102,7 +103,7 @@ function Incidents() {
                   icon={getIcon(req.status_title)}
                   title={req.status_title}
                   // count={"SR-" + req.id}
-                  count={"SR-" + req.ticket_id}
+                  count={"SR-" + req.ticket_id.substr(req.ticket_id.length - 5)}
                   percentage={{
                     color: "success",
                     // amount: "+55%",

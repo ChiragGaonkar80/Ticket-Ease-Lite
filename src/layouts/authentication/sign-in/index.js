@@ -37,13 +37,12 @@ function Basic() {
       const res = await Api.post("Employee/Login", {
         email: email,
         password: password,
-        isAdmin: rememberMe,
+        isAdminLogIn: rememberMe,
       });
 
       console.log("res==>>", res.status);
       if (res.status == 200) {
         console.log("res==>>", res.data);
-        alert("wait a minute");
         window.sessionStorage.setItem("authtoken", res.data.token);
         window.sessionStorage.setItem("isadmin", rememberMe);
         window.sessionStorage.setItem("emp_id", res.data.payload.emp_id);

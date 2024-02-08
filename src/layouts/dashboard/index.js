@@ -46,10 +46,10 @@ function Dashboard() {
   useEffect(() => {
     async function fetchData() {
       try {
-        data1 = await Api.get("RequestType/GetRequestTypesByDeptId?dept_id=1");
-        data2 = await Api.get("RequestType/GetRequestTypesByDeptId?dept_id=2");
-        data3 = await Api.get("RequestType/GetRequestTypesByDeptId?dept_id=3");
-        data4 = await Api.get("RequestType/GetRequestTypesByDeptId?dept_id=4");
+        data1 = await Api.get("RequestType/GetRequestTypesByDeptId?dept_id=dept_a84c6265-ee5b-4693-8c5e-812dae44ff47");
+        data2 = await Api.get("RequestType/GetRequestTypesByDeptId?dept_id=dept_fd3e3bdf-506c-423e-bfdd-6d75673682d9");
+        data3 = await Api.get("RequestType/GetRequestTypesByDeptId?dept_id=dept_b0272e7b-960e-4442-b154-18d6b98ffde1");
+        data4 = await Api.get("RequestType/GetRequestTypesByDeptId?dept_id=dept_83fc7376-55e0-4713-bec6-84369474abbb");
 
         setItRequests(data1.data);
         setLndRequests(data4.data);

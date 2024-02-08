@@ -1,19 +1,18 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable react/function-component-definition */
-
-
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 import MDBadge from "components/MDBadge";
+import React, { useEffect, useState } from "react";
 
 // Images
 import team2 from "assets/images/team-2.jpg";
 import team3 from "assets/images/team-3.jpg";
 import team4 from "assets/images/team-4.jpg";
 
-export default function data() {
+export default function data(res) {
+  console.log("author", res.data);
+
   const Author = ({ image, name, email }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDBox ml={2} lineHeight={1}>
@@ -55,17 +54,17 @@ export default function data() {
       <MDTypography variant="caption">{description}</MDTypography>
     </MDBox>
   );
-
-  return {
-    columns: [
-      { Header: "Ticket Id", accessor: "ticketId", align: "left" },
-      { Header: "Name", accessor: "name", align: "center" },
-      { Header: "Manager", accessor: "managerName", align: "center" },
-      { Header: "Status", accessor: "status", align: "center" },
-      { Header: "Date/Time", accessor: "dateAndTime", align: "center" },
-      { Header: "Action", accessor: "action", align: "center" },
-    ],
-
+  
+    return {
+      columns: [
+        { Header: "Ticket Id", accessor: "ticketId", align: "left" },
+        { Header: "Name", accessor: "name", align: "center" },
+        { Header: "Manager", accessor: "managerName", align: "center" },
+        { Header: "Status", accessor: "status", align: "center" },
+        { Header: "Date/Time", accessor: "dateAndTime", align: "center" },
+        { Header: "Action", accessor: "action", align: "center" },
+      ],
+      
     rows: [
       {
         ticketId: <MDTypography>SR7892</MDTypography>,
@@ -78,13 +77,7 @@ export default function data() {
         ),
         dateAndTime: <CreatedDate date={"12/09/2023"} time={"09:00 AM"} />,
         action: (
-          <MDTypography
-            component="a"
-            href="/viewInDetail/3"
-            variant="caption"
-            color="text"
-            fontWeight="medium"
-          >
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
             Edit
           </MDTypography>
         ),
@@ -142,7 +135,7 @@ export default function data() {
       {
         ticketId: <MDTypography>SR7892</MDTypography>,
         name: (
-          <Author image={team3} name="Sharvani Prabhu Salgaonkar" email="sharvani@persistent.com" />
+          <Author image={team3} name="Sharvani Parbhugaonkar" email="sharvani@persistent.com" />
         ),
         managerName: <Manager image={team3} name="Muskan Ladiya" email="muskan@persistent.com" />,
         status: (

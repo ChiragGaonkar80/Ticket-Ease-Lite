@@ -23,10 +23,10 @@ import Api from "utils/Api";
 import Marie from "assets/images/marie.jpg";
 import backgroundImage from "assets/images/bg-profile.jpeg";
 
-function Header({ children }) {
+function Header({ children , empData }) {
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
-  const [empData, setEmpData] = useState([]);
+  // const [empData, setEmpData] = useState([]);
 
   useEffect(() => {
     // A function that sets the orientation state of the tabs.
@@ -35,19 +35,9 @@ function Header({ children }) {
         ? setTabsOrientation("vertical")
         : setTabsOrientation("horizontal");
     }
-    async function fetchData() {
-      try {
-        const response = await Api.get(`Employee/GetEmployeeById?emp_id=1`);
-        setEmpData(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    }
-    fetchData();
 
-    /** 
-     The event listener that's calling the handleTabsOrientation function when resizing the window.
-    */
+
+
     window.addEventListener("resize", handleTabsOrientation);
 
     // Call the handleTabsOrientation function to set the state with the initial value.

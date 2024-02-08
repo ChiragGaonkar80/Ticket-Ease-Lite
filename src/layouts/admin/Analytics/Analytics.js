@@ -51,6 +51,8 @@ function Dashboard() {
 
       setTotalStatusCount(ticketStatusCount.data);
 
+      console.log("data==>>", ticketStatusCount.data);
+
       ticketStatusCount.data.map((d, i) => {
         labelsForStatusCount[i] = d.status_title;
         countForStatusCount[i] = d.ticket_count;
@@ -133,8 +135,8 @@ function Dashboard() {
               <ComplexStatisticsCard
                 color="success"
                 icon="store"
-                title={totalStatusCount.length > 0 ? totalStatusCount[2].status_title : "Loading"}
-                count={totalStatusCount.length > 0 ? totalStatusCount[2].ticket_count : "0"}
+                title={totalStatusCount.length > 0 ? totalStatusCount[2]?.status_title : "Loading"}
+                count={totalStatusCount.length > 0 ? totalStatusCount[2]?.ticket_count : "0"}
                 percentage={{
                   // color: "success",
                   // amount: "+1%",

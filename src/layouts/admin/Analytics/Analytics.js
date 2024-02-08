@@ -14,6 +14,7 @@ import reportsLineChartData from "layouts/admin/Analytics/data/reportsLineChartD
 import reportsBarChartData from "layouts/admin/Analytics/data/reportsBarChartData";
 import { useEffect, useState } from "react";
 import Api from "utils/Api";
+import { Button } from "@mui/material";
 
 // Dashboard components
 
@@ -25,12 +26,19 @@ function Dashboard() {
   var countForStatusCount = [];
   var labelsForPriorityCount = [];
   var countForPriorityCount = [];
+
+  const [totalStatusCount, setTotalStatusCount] = useState({});
+
+  // const [totalCounts, setTotalCounts] = useState({});
+
   useEffect(() => {
     async function fetchData() {
-      var id = 1;
+      var id = "emp_20e73bb5-5474-40c4-badf-152422ffc7cf";
       const ticketStatusCount = await Api.get(
         `Employee/GetTicketStatusCountsForAdmin?emp_id=${id}`
       );
+
+      setTotalStatusCount(ticketStatusCount.data);
 
       ticketStatusCount.data.map((d, i) => {
         labelsForStatusCount[i] = d.status_title;
@@ -82,12 +90,12 @@ function Dashboard() {
               <ComplexStatisticsCard
                 color="dark"
                 icon="blindsRoundedIcon"
-                title="Opened"
-                count={"102"}
+                title={totalStatusCount.length > 0 ? totalStatusCount[0].status_title : "Loading"}
+                count={totalStatusCount.length > 0 ? totalStatusCount[0].ticket_count : "0"}
                 percentage={{
                   // color: "success",
                   // amount: "+55%",
-                  label: "102 Tickets are opened.",
+                  label: "Tickets Closed ",
                 }}
               />
             </MDBox>
@@ -96,12 +104,12 @@ function Dashboard() {
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 icon="person"
-                title="In Progress"
-                count="105"
+                title={totalStatusCount.length > 0 ? totalStatusCount[1].status_title : "Loading"}
+                count={totalStatusCount.length > 0 ? totalStatusCount[1].ticket_count : "0"}
                 percentage={{
                   // color: "success",
                   // amount: "+3%",
-                  label: "105 Tickets are in progress.",
+                  label: "Tickets Opened",
                 }}
               />
             </MDBox>
@@ -111,12 +119,12 @@ function Dashboard() {
               <ComplexStatisticsCard
                 color="success"
                 icon="store"
-                title="Resolved"
-                count="700"
+                title={totalStatusCount.length > 0 ? totalStatusCount[2].status_title : "Loading"}
+                count={totalStatusCount.length > 0 ? totalStatusCount[2].ticket_count : "0"}
                 percentage={{
                   // color: "success",
                   // amount: "+1%",
-                  label: "700 Tickets were resolved.",
+                  label: "Tickets Pending",
                 }}
               />
             </MDBox>
@@ -126,12 +134,12 @@ function Dashboard() {
               <ComplexStatisticsCard
                 color="primary"
                 icon="closed"
-                title="Closed"
-                count="1.8k"
+                title={totalStatusCount.length > 0 ? totalStatusCount[3].status_title : "Loading"}
+                count={totalStatusCount.length > 0 ? totalStatusCount[3].ticket_count : "0"}
                 percentage={{
                   color: "success",
                   amount: "",
-                  label: "1.8k Tickets were closed.",
+                  label: "Tickets Resolved.",
                 }}
               />
             </MDBox>
